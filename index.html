@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Notion D-Day Widget with Background</title>
+  <title>Notion D-Day Widget</title>
   <style>
     @font-face {
       font-family: 'MyCustomFont';
@@ -12,54 +12,47 @@
       font-style: normal;
     }
 
-    body {
-      margin: 0;
-      padding: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      
-      /* 🖼️ 배경 이미지: 올려두신 bg.png 파일을 불러옵니다 */
-      background-image: url('./bg.png');
-      background-size: cover;      /* 화면에 꽉 차게 조절 */
-      background-position: center; /* 이미지 중앙 맞춤 */
-      background-repeat: no-repeat;
+    * {
+      box-sizing: border-box;
     }
 
-    /* 💡 글자 가독성을 위해 배경을 약간 어둡게 해주는 필터 */
-    .overlay {
-      position: absolute;
-      top: 0; left: 0; width: 100%; height: 100%;
-      background-color: rgba(0, 0, 0, 0.1); /* 배경이 너무 어두우면 0.3을 0.1이나 0.2로 낮춰주세요 */
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
+      overflow: hidden;
+
+      /* 🖼️ 배경 이미지를 body에 직접 깔고, 위에 어두운 필터를 겹쳐놓습니다 */
+      background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('./bg.png');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
     }
 
     .dday {
       font-family: 'MyCustomFont', sans-serif !important;
-      color: #00ff00; 
-      font-size: 6rem; 
-      letter-spacing: -2px; 
-      transform: scale(0.6, 2); 
+      color: #00ff00;
+      font-size: 6rem;
+      letter-spacing: -2px;
+      transform: scale(0.6, 2);
       display: inline-block;
       text-align: center;
-      z-index: 1;
     }
   </style>
 </head>
 <body>
 
-  <div class="overlay">
-    <div class="dday" id="dday">D-DAY</div>
-  </div>
+  <div class="dday" id="dday">D-DAY</div>
 
   <script>
     function updateDDay() {
       const now = new Date();
       let targetYear = now.getFullYear();
-      let targetDate = new Date(targetYear, 10, 19); // 11월 19일 (월은 0부터 시작하므로 10)
+      let targetDate = new Date(targetYear, 10, 19); // 11월 19일
 
       if (now > targetDate && now.getDate() !== 19) {
         targetDate = new Date(targetYear + 1, 10, 19);
